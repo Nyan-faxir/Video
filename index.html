@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دوکانی گوڵی ناوازە</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #e91e63; /* ڕەنگی پەمەیی گوڵ */
+            --secondary-color: #fce4ec;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .flower-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .flower-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .flower-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .flower-card h3 {
+            margin: 15px 0 5px;
+            color: #444;
+        }
+
+        .price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .order-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Vazirmatn';
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: #c2185b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #333;
+            color: white;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🌸 گوڵستانی بەختەوەری</div>
+    <p>جوانترین چەپکە گوڵ بۆ ئازیزانت</p>
+</header>
+
+<div class="container" id="flower-list">
+    </div>
+
+<footer>
+    <p>هەموو مافەکان پارێزراوە بۆ دوکانی گوڵ - ٢٠٢٦</p>
+</footer>
+
+<script>
+    // لیستی گوڵەکان (Data)
+    const flowers = [
+        { id: 1, name: "چەپکە گوڵی سوور", price: "٢٥,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1548610762-65ca0615f399?auto=format&fit=crop&w=500" },
+        { id: 2, name: "باکسی ڕۆژی لەدایکبوون", price: "٤٠,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=500" },
+        { id: 3, name: "گوڵی سپی کلاسیک", price: "١٨,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=500" },
+        { id: 4, name: "تێکەڵەی بەهاری", price: "٣٠,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=500" }
+    ];
+
+    const flowerList = document.getElementById('flower-list');
+
+    // دروستکردنی کارتەکان بە شێوەی دینامیکی
+    flowers.forEach(flower => {
+        const card = `
+            <div class="flower-card">
+                <img src="${flower.img}" alt="${flower.name}">
+                <h3>${flower.name}</h3>
+                <p class="price">${flower.price}</p>
+                <button class="order-btn" onclick="orderFlower('${flower.name}')">داواکردن لە واتسئەپ</button>
+            </div>
+        `;
+        flowerList.innerHTML += card;
+    });
+
+    // فانکشن بۆ داواکردن
+    function orderFlower(flowerName) {
+        const phone = "964750XXXXXXX"; // ژمارەی خۆت لێرە دابنێ
+        const message = encodeURIComponent(`سڵاو، دەمەوێت ئەم گوڵە داوا بکەم: ${flowerName}`);
+        window.location.href = `https://wa.me/${phone}?text=${message}`;
+    }
+</script>
+
+</body>
+</html>
