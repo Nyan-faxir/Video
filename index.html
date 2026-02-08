@@ -96,19 +96,46 @@
 
         .buy-btn:hover { background: transparent; color: var(--primary); }
 
-        /* بەشی زانیارییەکان لە خوارەوە بە بچووکی */
-        .info-footer { 
-            max-width: 800px; 
-            margin: 100px auto 50px; 
-            padding: 20px; 
-            border-top: 1px solid #eee;
-            color: #666;
+        /* بەشی زانیارییەکان بە دیزاینی سێ ستوونی و شیک */
+        .footer-info-section {
+            background: #fff;
+            padding: 60px 20px;
+            margin-top: 50px;
+            border-top: 1px solid #f0f0f0;
         }
-        
-        .info-box { margin-bottom: 30px; }
-        .info-box h3 { font-size: 18px; color: var(--rose); margin-bottom: 10px; }
-        .info-box p { font-size: 14px; line-height: 1.6; margin: 5px 0; }
-        .mini-wa-btn { color: #25d366; text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid #25d366; padding: 2px 10px; display: inline-block; margin-top: 5px; }
+
+        .info-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .info-col h4 {
+            color: var(--rose);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-col p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .contact-link {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 13px;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 2px;
+            margin-top: 5px;
+        }
 
         .payment-box {
             background: #fdf2f8; padding: 60px 20px; text-align: center;
@@ -148,24 +175,26 @@
 
 <div class="grid" id="flower-grid"></div>
 
-<div class="info-footer">
-    <div class="info-box">
-        <h3>داواکاری تایبەت 🎨</h3>
-        <p>ئەگەر دەتەوێت دیزاینێکی جیاواز بە ویستی خۆت دروست بکەیت، تەنها پەیوەندیمان پێوە بکە.</p>
-        <a href="https://wa.me/9647519568548?text=سڵاو، دەمەوێت داواکارییەکی تایبەت بکەم" class="mini-wa-btn">پەیوەندی بکە</a>
-    </div>
+<div class="footer-info-section">
+    <div class="info-container">
+        <div class="info-col">
+            <h4>دەربارەی ئێمە</h4>
+            <p>ئیلیان فڵاوەرز تەنها گوڵفرۆشی نییە، بەڵکو شوێنێکە بۆ گۆڕینی هەستەکانتان بۆ دیارییەکی ناوازە. ئێمە بە باشترین جۆری گوڵی فرێش و مۆدێرنترین دیزاینەکان کار دەکەین.</p>
+        </div>
 
-    <div class="info-box">
-        <h3>پرسیارە باوەکان</h3>
-        <p><strong>گەیاندن چەند کات دەخایەنێت؟</strong></p>
-        <p>بەپێی شوێنەکەت، گەیاندن لە نێوان ١ بۆ ٣ کاتژمێر دەخایەنێت.</p>
-        <p><strong>چۆن پارە بنێرین؟</strong></p>
-        <p>دەتوانیت لە ڕێگەی FIB یان FastPay نیوەی بڕەکە وەک پێشەکی بنێریت.</p>
-    </div>
+        <div class="info-col">
+            <h4>داواکاری تایبەت 🎨</h4>
+            <p>ئەگەر دەتەوێت دیزاینێکی جیاواز بە ویستی خۆت دروست بکەیت، تەنها پەیوەندیمان پێوە بکە.</p>
+            <a href="https://wa.me/9647519568548?text=سڵاو، دەمەوێت داواکارییەکی تایبەت بکەم" class="contact-link">پەیوەندی بکە</a>
+        </div>
 
-    <div class="info-box">
-        <h3>دەربارەی ئێمە</h3>
-        <p>ئیلیان فڵاوەرز تەنها گوڵفرۆشی نییە، بەڵکو شوێنێکە بۆ گۆڕینی هەستەکانتان بۆ دیارییەکی ناوازە. ئێمە بە باشترین جۆری گوڵی فرێش و مۆدێرنترین دیزاینەکان کار دەکەین.</p>
+        <div class="info-col">
+            <h4>پرسیارە باوەکان</h4>
+            <p><strong>گەیاندن چەند کات دەخایەنێت؟</strong></p>
+            <p>بەپێی شوێنەکەت، گەیاندن لە نێوان ١ بۆ ٣ کاتژمێر دەخایەنێت.</p>
+            <p><strong>چۆن پارە بنێرین؟</strong></p>
+            <p>دەتوانیت لە ڕێگەی FIB یان FastPay نیوەی بڕەکە وەک پێشەکی بنێریت.</p>
+        </div>
     </div>
 </div>
 
