@@ -3,149 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دوکانی گوڵی ناوازە</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap" rel="stylesheet">
+    <title>گوڵفرۆشی ئیلیان | Elian Flowers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #e91e63; /* ڕەنگی پەمەیی گوڵ */
-            --secondary-color: #fce4ec;
-            --text-color: #333;
+            --primary: #d81b60;
+            --accent: #ff4081;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         }
 
         body {
             font-family: 'Vazirmatn', sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: var(--text-color);
+            background: linear-gradient(135deg, #fff5f7 0%, #fce4ec 100%);
+            color: #2d3436;
+            min-height: 100vh;
+        }
+
+        /* بەشی ئاگادارکردنەوەی پارەدان */
+        .payment-alert {
+            background: linear-gradient(90deg, #d81b60, #ad1457);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         header {
-            background-color: white;
-            padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 0 0 50px 50px;
+            box-shadow: var(--shadow);
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-size: 45px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-card {
+            max-width: 800px;
+            margin: -30px auto 30px;
+            background: var(--glass);
+            backdrop-filter: blur(4px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: var(--shadow);
+            line-height: 1.8;
+            font-size: 17px;
+            text-align: justify;
+        }
+
+        /* مەرجی پارەدان لەناو سایتەکە */
+        .policy-box {
+            background: #fff3f3;
+            border-right: 5px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #ad1457;
         }
 
         .container {
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 40px auto;
             padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .flower-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            text-align: center;
-            padding-bottom: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .flower-card:hover {
-            transform: translateY(-10px);
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
         }
 
         .flower-card img {
             width: 100%;
-            height: 250px;
+            height: 320px;
             object-fit: cover;
         }
 
-        .flower-card h3 {
-            margin: 15px 0 5px;
-            color: #444;
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .info {
+            padding: 25px;
         }
 
         .price {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.2em;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin: 10px 0;
         }
 
         .order-btn {
-            background-color: var(--primary-color);
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             color: white;
             border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
             font-family: 'Vazirmatn';
-            font-size: 16px;
+            font-weight: 600;
+            font-size: 17px;
+            cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .order-btn:hover {
-            background-color: #c2185b;
+            opacity: 0.9;
+            letter-spacing: 1px;
         }
 
         footer {
+            background: #1a1a1a;
+            color: #999;
+            padding: 50px 20px;
             text-align: center;
-            padding: 40px;
+            margin-top: 80px;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .payment-methods span {
             background: #333;
+            padding: 5px 15px;
+            border-radius: 5px;
             color: white;
-            margin-top: 50px;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
+<div class="payment-alert">
+    📢 ئاگاداری: بۆ چەسپاندنی داواکارییەکەت، پێویستە نیوەی پارەکە لەڕێگەی FIB یان FastPay بنێردرێت.
+</div>
+
 <header>
-    <div class="logo">🌸 گوڵستانی بەختەوەری</div>
-    <p>جوانترین چەپکە گوڵ بۆ ئازیزانت</p>
+    <div class="logo">ELIAN FLOWERS</div>
+    <div style="color: #ad1457; font-weight: 500; letter-spacing: 2px;">گوڵفرۆشی ئیلیان</div>
 </header>
 
-<div class="container" id="flower-list">
+<div class="welcome-card">
+    بەخێربێن بۆ گوڵفرۆشی ئیلیان کە ئێمە ڕێکخستنی گوڵی جوان و دەستی بۆ هەموو بۆنەیەک دروست دەکەین. گوڵفرۆشە شارەزاکانمان بە وریاییەوە هەر دەستە گوڵێک دیزاین دەکەن، هەڵبژاردنی بەرفراوانی گوڵی تازە پێشکەش دەکەن. داواکردنی ئاسان بە شێوەی ئۆنلاین دڵنیای دەدات کە دەتوانیت بە ئاسانی ڕێکخستنی تەواو هەڵبژێریت و بنێری، لەگەڵ گەیاندنی خێرا بۆ بەردەم دەرگاکەت.
+    
+    <div class="policy-box">
+        ⚠️ تکایە ئاگاداربە: پێش ناردنی هەر داواکارییەک، دەبێت ٥٠٪ی تێچووەکە بە شێوەی پێشوەختە (FIB / FastPay) بنێردرێت.
     </div>
+</div>
+
+<div class="container" id="flower-list"></div>
 
 <footer>
-    <p>هەموو مافەکان پارێزراوە بۆ دوکانی گوڵ - ٢٠٢٦</p>
+    <p>هەموو مافەکان پارێزراوە بۆ گوڵفرۆشی ئیلیان &copy; ٢٠٢٦</p>
+    <div class="payment-methods">
+        <span>FastPay</span>
+        <span>FIB</span>
+        <span>Cash on Delivery</span>
+    </div>
 </footer>
 
 <script>
-    // لیستی گوڵەکان (Data)
     const flowers = [
-        { id: 1, name: "چەپکە گوڵی سوور", price: "٢٥,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1548610762-65ca0615f399?auto=format&fit=crop&w=500" },
-        { id: 2, name: "باکسی ڕۆژی لەدایکبوون", price: "٤٠,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=500" },
-        { id: 3, name: "گوڵی سپی کلاسیک", price: "١٨,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=500" },
-        { id: 4, name: "تێکەڵەی بەهاری", price: "٣٠,٠٠٠ دینار", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=500" }
+        { name: "باکسی ئیلیانی ناوازە", price: "٣٥,٠٠٠ د.ع", img: "gull1.jpg", tag: "پڕفرۆشترین" },
+        { name: "چەپکە گوڵی پەمەیی", price: "٢٠,٠٠٠ د.ع", img: "gull2.jpg", tag: "نوێ" },
+        { name: "گوڵەباخی سووری شاهانە", price: "٢٥,٠٠٠ د.ع", img: "gull3.jpg", tag: "دیاری" },
+        { name: "تێکەڵەی گوڵی دەگمەن", price: "٤٥,٠٠٠ د.ع", img: "gull4.jpg", tag: "ناوازە" }
     ];
 
-    const flowerList = document.getElementById('flower-list');
+    const list = document.getElementById('flower-list');
 
-    // دروستکردنی کارتەکان بە شێوەی دینامیکی
-    flowers.forEach(flower => {
-        const card = `
+    flowers.forEach(f => {
+        list.innerHTML += `
             <div class="flower-card">
-                <img src="${flower.img}" alt="${flower.name}">
-                <h3>${flower.name}</h3>
-                <p class="price">${flower.price}</p>
-                <button class="order-btn" onclick="orderFlower('${flower.name}')">داواکردن لە واتسئەپ</button>
+                <span class="badge">${f.tag}</span>
+                <img src="${f.img}" alt="${f.name}">
+                <div class="info">
+                    <h3>${f.name}</h3>
+                    <span class="price">${f.price}</span>
+                    <button class="order-btn" onclick="order('${f.name}')">
+                        داواکردن لە واتسئەپ 💬
+                    </button>
+                </div>
             </div>
         `;
-        flowerList.innerHTML += card;
     });
 
-    // فانکشن بۆ داواکردن
-    function orderFlower(flowerName) {
-        const phone = "964750XXXXXXX"; // ژمارەی خۆت لێرە دابنێ
-        const message = encodeURIComponent(`سڵاو، دەمەوێت ئەم گوڵە داوا بکەم: ${flowerName}`);
-        window.location.href = `https://wa.me/${phone}?text=${message}`;
+    function order(name) {
+        const phone = "964750XXXXXXX"; // ژمارەی خۆت لێرە بنووسە
+        const msg = encodeURIComponent(`سڵاو، دەمەوێت ئەمە داوا بکەم: ${name}\nئاگادارم کە دەبێت نیوەی پارەکە بە (FIB/FastPay) بنێرم.`);
+        window.location.href = `https://wa.me/${phone}?text=${msg}`;
     }
 </script>
 
