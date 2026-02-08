@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ئیلیان فڵاوەرز | Elian Flowers</title>
+    <title>گوڵفرۆشی ئیلیان</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --main-color: #6a1b9a;
+            --primary: #8e24aa;
             --accent: #d81b60;
-            --glass: rgba(255, 255, 255, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.9);
         }
-
-        * { box-sizing: border-box; transition: all 0.3s ease; }
 
         body {
             font-family: 'Vazirmatn', sans-serif;
@@ -22,78 +20,75 @@
             color: #2d3436;
         }
 
-        /* مەرجەکە لە سەرەوە - کورت و دیار */
-        .top-notice {
-            background: linear-gradient(90deg, #6a1b9a, #d81b60);
+        .payment-alert {
+            background: #6a1b9a;
             color: white;
             text-align: center;
             padding: 10px;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
         }
 
-        /* ڕوکاری پشتەوە (Header) وەک پێشوو */
         header {
-            height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                              url('https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1200&q=80');
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            /* وێنەیەک بۆ پاشبنەمای هێدەرەکە */
+            background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), 
+                              url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=80');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            color: white;
-            border-radius: 0 0 40px 40px;
-            text-align: center;
-        }
-
-        .logo-box {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 25px 40px;
-            border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
-            text-transform: lowercase;
+            color: var(--primary);
+            text-transform: lowercase; /* بۆ ئەوەی ببێتە سمۆڵ */
             margin: 0;
-            letter-spacing: 3px;
+            letter-spacing: 1px;
         }
 
-        /* کارتەکان */
+        .welcome-card {
+            max-width: 600px;
+            margin: -20px auto 30px;
+            background: var(--bg-glass);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            font-size: 15px;
+            border: 1px solid white;
+        }
+
         .container {
             max-width: 1100px;
-            margin: 40px auto;
+            margin: 0 auto;
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 25px;
         }
 
         .flower-card {
             background: white;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
         }
 
         .flower-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(106, 27, 154, 0.15);
+            transform: translateY(-5px);
         }
 
         .flower-card img {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
         }
 
@@ -105,98 +100,88 @@
         .price {
             font-size: 22px;
             font-weight: 800;
-            color: var(--main-color);
+            color: var(--primary);
             margin-bottom: 15px;
             display: block;
         }
 
         .order-btn {
             width: 100%;
-            background: linear-gradient(45deg, #6a1b9a, #d81b60);
+            background: var(--primary);
             color: white;
             border: none;
             padding: 12px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-family: 'Vazirmatn';
             font-weight: 600;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* بەشی خوارەوە - پارەدان */
+        .order-btn:hover {
+            background: var(--accent);
+        }
+
         footer {
-            background: white;
-            padding: 40px 20px;
             text-align: center;
-            border-radius: 40px 40px 0 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.02);
-            margin-top: 50px;
-        }
-
-        .pay-grid {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .pay-item {
-            background: #f3e5f5;
-            padding: 8px 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #6a1b9a;
-            border: 1px solid #e1bee7;
-        }
-
-        .cash-item {
-            background: #fff3e0;
-            padding: 8px 18px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ef6c00;
-            border: 1px solid #ffe0b2;
+            padding: 40px;
+            color: #888;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="top-notice">
-    📢 مەرجی داواکردن: پێویستە ٥٠٪ی پارەکە بە (FIB / FastPay) پێشوەختە بنێردرێت.
+<div class="payment-alert">
+    📢 پێویستە ٥٠٪ی پارەکە پێشوەختە بە (FIB / FastPay) بنێردرێت.
 </div>
 
 <header>
-    <div class="logo-box">
-        <h1 class="logo">elian flowers</h1>
-        <p style="margin-top: 5px; opacity: 0.9;">جوانی لە هەر چەپکە گوڵێکدا</p>
-    </div>
+    <h1 class="logo">elian flowers</h1>
+    <p style="margin-top: 5px; color: #444; font-weight: 600;">گوڵفرۆشی ئیلیان</p>
 </header>
+
+<div class="welcome-card">
+    شوێنی دیزاینە ناوازەکان و گوڵی تازە بۆ هەموو بۆنەیەک. داواکردنی ئاسان و گەیاندنی خێرا بۆ هەموو شوێنێک.
+</div>
 
 <div class="container" id="flower-list"></div>
 
 <footer>
-    <h3 style="color: #6a1b9a; font-size: 18px;">💳 شێوازەکانی پارەدان</h3>
-    <div class="pay-grid">
-        <div class="pay-item">FIB</div>
-        <div class="pay-item">Fast Pay</div>
-        <div class="cash-item">نیوەکەی تر لەکاتی گەیاندن 🚚</div>
-    </div>
-    <p style="margin-top: 30px; font-size: 11px; color: #bbb;">elian flowers &copy; 2026</p>
+    گوڵفرۆشی ئیلیان &copy; ٢٠٢٦
 </footer>
 
 <script>
+    // ئەم لینکانە وێنەی ئامادەن لە ئینتەرنێتەوە
     const flowers = [
-        { name: "باکسی ئیلیانی لوکس", price: "٣٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600" },
-        { name: "چەپکە گوڵی سوور", price: "٢٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1548610762-65ca0615f399?auto=format&fit=crop&w=600" },
-        { name: "گوڵی سپی ئاشتی", price: "٢٠,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600" },
-        { name: "باکسی مۆری شاهانە", price: "٤٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=600" }
+        { 
+            name: "باکسی ئیلیانی تایبەت", 
+            price: "٣٥,٠٠٠ د.ع", 
+            img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=500&q=80" 
+        },
+        { 
+            name: "چەپکە گوڵی پەمەیی", 
+            price: "٢٠,٠٠٠ د.ع", 
+            img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=500&q=80" 
+        },
+        { 
+            name: "گوڵەباخی سووری شاهانە", 
+            price: "٢٥,٠٠٠ د.ع", 
+            img: "https://images.unsplash.com/photo-1548610762-65ca0615f399?auto=format&fit=crop&w=500&q=80" 
+        },
+        { 
+            name: "تێکەڵەی گوڵی دەگمەن", 
+            price: "٤٥,٠٠٠ د.ع", 
+            img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=500&q=80" 
+        }
     ];
 
     const list = document.getElementById('flower-list');
+
     flowers.forEach(f => {
         list.innerHTML += `
             <div class="flower-card">
-                <img src="${f.img}" loading="lazy" alt="${f.name}">
+                <img src="${f.img}" alt="${f.name}">
                 <div class="info">
                     <h3>${f.name}</h3>
                     <span class="price">${f.price}</span>
@@ -207,8 +192,8 @@
     });
 
     function order(name) {
-        const phone = "964750XXXXXXX"; // ژمارەی مۆبایلی خۆت لێرە دابنێ
-        const msg = encodeURIComponent(`سڵاو ئیلیان فڵاوەرز، دەمەوێت ئەمە داوا بکەم: ${name}\nئاگادارم کە دەبێت ٥٠٪ی پارەکە بە پێشوەختە بنێرم.`);
+        const phone = "964750XXXXXXX"; // ژمارەی خۆت لێرە دابنێ
+        const msg = encodeURIComponent(`سڵاو، دەمەوێت ئەمە داوا بکەم: ${name}\nئاگادارم کە دەبێت ٥٠٪ی پارەکە پێشوەختە بنێرم.`);
         window.location.href = `https://wa.me/${phone}?text=${msg}`;
     }
 </script>
