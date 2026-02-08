@@ -14,6 +14,7 @@
             --rose: #e84393;
             --gold: #d4af37;
             --bg: #fffbfb;
+            --light-gray: #f9f9f9;
         }
 
         * { box-sizing: border-box; scroll-behavior: smooth; }
@@ -66,13 +67,13 @@
             text-decoration: none; font-size: 30px; animation: pulse 2s infinite;
         }
 
-        .section-title { text-align: center; margin: 80px 0 40px; }
-        .section-title h2 { font-size: 35px; color: var(--primary); position: relative; display: inline-block; }
-        .section-title h2::after { content: ''; width: 50px; height: 3px; background: var(--rose); position: absolute; bottom: -10px; right: 0; }
+        .section-title { text-align: center; margin: 60px 0 30px; }
+        .section-title h2 { font-size: 30px; color: var(--primary); position: relative; display: inline-block; }
+        .section-title h2::after { content: ''; width: 40px; height: 3px; background: var(--rose); position: absolute; bottom: -8px; right: 0; }
 
         .grid {
             max-width: 1200px; margin: 0 auto; padding: 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
         }
 
         .card {
@@ -81,35 +82,66 @@
         }
 
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 400px; object-fit: cover; transition: 0.8s; }
+        .card img { width: 100%; height: 350px; object-fit: cover; transition: 0.8s; }
         .card:hover img { transform: scale(1.1); }
 
-        .card-info { padding: 25px; text-align: center; background: white; }
-        .card-info h3 { font-size: 22px; margin: 0 0 10px; }
-        .price { color: var(--rose); font-weight: 800; font-size: 20px; display: block; margin-bottom: 20px; }
+        .card-info { padding: 20px; text-align: center; background: white; }
+        .card-info h3 { font-size: 20px; margin: 0 0 10px; }
+        .price { color: var(--rose); font-weight: 800; font-size: 18px; display: block; margin-bottom: 15px; }
 
         .buy-btn {
             background: var(--primary); color: white; text-decoration: none;
-            padding: 12px 30px; display: inline-block; font-weight: 600;
+            padding: 10px 25px; display: inline-block; font-weight: 600; font-size: 14px;
             border: 1px solid var(--primary); transition: 0.3s;
         }
 
         .buy-btn:hover { background: transparent; color: var(--primary); }
 
-        .content-section { max-width: 900px; margin: 50px auto; padding: 20px; line-height: 1.8; text-align: center;}
-        
-        .faq-item { background: white; margin-bottom: 10px; padding: 15px; border: 1px solid #eee; text-align: right; }
-        .faq-item h4 { color: var(--rose); margin-bottom: 5px; }
-
-        .payment-box {
-            background: #fdf2f8; padding: 60px 20px; text-align: center; margin-top: 50px;
+        /* بەشی خوارەوەی نوێ و ڕێکخراو */
+        .footer-details {
+            background: #fdf2f8;
+            padding: 50px 20px;
+            margin-top: 80px;
+            border-top: 1px solid #eee;
         }
 
-        .methods { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
-        .method-item { background: white; padding: 15px 30px; border-radius: 10px; font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: right;
+        }
 
-        .social-links { margin-top: 30px; font-size: 24px; }
-        .social-links a { color: var(--primary); margin: 0 15px; transition: 0.3s; }
+        .footer-col h4 {
+            color: var(--rose);
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-right: 3px solid var(--rose);
+            padding-right: 10px;
+        }
+
+        .footer-col p {
+            font-size: 13.5px;
+            color: #555;
+            line-height: 1.8;
+            margin: 0 0 10px 0;
+        }
+
+        .mini-btn {
+            font-size: 12px;
+            color: var(--rose);
+            text-decoration: none;
+            font-weight: 800;
+            border: 1px solid var(--rose);
+            padding: 5px 12px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .social-links { margin-top: 20px; }
+        .social-links a { color: var(--primary); margin-left: 15px; font-size: 20px; transition: 0.3s; }
         .social-links a:hover { color: var(--rose); }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -133,51 +165,41 @@
     <a href="#products" style="color: white; margin-top: 30px; text-decoration: none; border-bottom: 2px solid white;">ببینە</a>
 </div>
 
-<section class="content-section">
-    <div class="section-title"><h2>دەربارەی ئێمە</h2></div>
-    <p>ئیلیان فڵاوەرز تەنها گوڵفرۆشی نییە، بەڵکو شوێنێکە بۆ گۆڕینی هەستەکانتان بۆ دیارییەکی ناوازە. ئێمە بە باشترین جۆری گوڵی فرێش و مۆدێرنترین دیزاینەکان کار دەکەین.</p>
-</section>
-
 <div class="section-title" id="products">
     <h2>کۆلێکشنی نوێ</h2>
 </div>
 
 <div class="grid" id="flower-grid"></div>
 
-<section class="content-section">
-    <div class="section-title"><h2>داواکاری تایبەت 🎨</h2></div>
-    <p>ئەگەر دەتەوێت دیزاینێکی جیاواز بە ویستی خۆت دروست بکەیت، تەنها پەیوەندیمان پێوە بکە.</p>
-    <a href="https://wa.me/9647519568548?text=سڵاو، دەمەوێت داواکارییەکی تایبەت بکەم" class="buy-btn">پەیوەندی بکە</a>
-</section>
+<footer class="footer-details">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>دەربارەی ئێمە</h4>
+            <p>ئیلیان فڵاوەرز تەنها گوڵفرۆشی نییە، بەڵکو شوێنێکە بۆ گۆڕینی هەستەکانتان بۆ دیارییەکی ناوازە. ئێمە بە باشترین جۆری گوڵی فرێش و مۆدێرنترین دیزاینەکان کار دەکەین.</p>
+        </div>
 
-<section class="content-section">
-    <div class="section-title"><h2>پرسیارە باوەکان</h2></div>
-    <div class="faq-item">
-        <h4>گەیاندن چەند کات دەخایەنێت؟</h4>
-        <p>بەپێی شوێنەکەت، گەیاندن لە نێوان ١ بۆ ٣ کاتژمێر دەخایەنێت.</p>
-    </div>
-    <div class="faq-item">
-        <h4>چۆن پارە بنێرین؟</h4>
-        <p>دەتوانیت لە ڕێگەی FIB یان FastPay نیوەی بڕەکە وەک پێشەکی بنێریت.</p>
-    </div>
-</section>
+        <div class="footer-col">
+            <h4>داواکاری تایبەت 🎨</h4>
+            <p>ئەگەر دەتەوێت دیزاینێکی جیاواز بە ویستی خۆت دروست بکەیت، تەنها پەیوەندیمان پێوە بکە.</p>
+            <a href="https://wa.me/9647519568548?text=سڵاو، دەمەوێت داواکارییەکی تایبەت بکەم" class="mini-btn">پەیوەندی بکە</a>
+        </div>
 
-<div class="payment-box">
-    <h2>💳 شێوازەکانی پارەدان</h2>
-    <div class="methods">
-        <div class="method-item" style="color: #6a1b9a;">FIB</div>
-        <div class="method-item" style="color: #d81b60;">FastPay</div>
+        <div class="footer-col">
+            <h4>پرسیارە باوەکان</h4>
+            <p><strong>گەیاندن:</strong> نێوان ١ بۆ ٣ کاتژمێر دەخایەنێت.</p>
+            <p><strong>پارەدان:</strong> دەتوانن لە ڕێگەی FIB یان FastPay نیوەی بڕەکە وەک پێشەکی بنێرن.</p>
+            
+            <div class="social-links">
+                <a href="https://www.tiktok.com/@flower_elyan" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.snapchat.com/add/elyan_202" target="_blank"><i class="fab fa-snapchat"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
     </div>
     
-    <div class="social-links">
-        <a href="https://www.tiktok.com/@flower_elyan?_r=1&_t=ZS-93kfwFfPzTl1" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.snapchat.com/add/elyan_202?share_id=BCJ_s5Q-T8s&locale=ar-AE" target="_blank"><i class="fab fa-snapchat"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+    <div style="text-align: center; margin-top: 40px; font-size: 11px; color: #aaa; border-top: 1px solid #eee; padding-top: 20px;">
+        ELIAN FLOWERS &copy; 2026 - هەمیشە جیاواز
     </div>
-</div>
-
-<footer style="padding: 40px; text-align: center; font-size: 12px; color: #999;">
-    ELIAN FLOWERS &copy; 2026 - هەمیشە جیاواز
 </footer>
 
 <script>
