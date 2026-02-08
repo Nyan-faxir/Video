@@ -24,6 +24,17 @@
             overflow-x: hidden;
         }
 
+        /* مەرجەکە - کاتێک ئەچیەتە خوارەوە دیار نامێنێت */
+        .order-notice {
+            background: linear-gradient(90deg, #e84393, #6a1b9a);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            width: 100%;
+        }
+
         /* Loading Animation */
         .loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -31,7 +42,7 @@
             z-index: 9999; transition: 0.5s;
         }
 
-        /* Hero Section - زۆر لوکس */
+        /* Hero Section */
         .hero {
             height: 90vh;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
@@ -49,7 +60,6 @@
 
         .hero p { font-size: 20px; opacity: 0.9; animation: fadeInUp 1.5s; }
 
-        /* Floating WhatsApp */
         .float-wa {
             position: fixed; bottom: 30px; left: 30px; 
             background: #25d366; color: white; width: 60px; height: 60px;
@@ -58,7 +68,6 @@
             text-decoration: none; font-size: 30px; animation: pulse 2s infinite;
         }
 
-        /* Product Cards - وەک سایتە گرانبەهاکان */
         .section-title { text-align: center; margin: 80px 0 40px; }
         .section-title h2 { font-size: 35px; color: var(--primary); position: relative; display: inline-block; }
         .section-title h2::after { content: ''; width: 50px; height: 3px; background: var(--rose); position: absolute; bottom: -10px; right: 0; }
@@ -74,7 +83,6 @@
         }
 
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-
         .card img { width: 100%; height: 400px; object-fit: cover; transition: 0.8s; }
         .card:hover img { transform: scale(1.1); }
 
@@ -90,7 +98,6 @@
 
         .buy-btn:hover { background: transparent; color: var(--primary); }
 
-        /* Payment Section */
         .payment-box {
             background: #fdf2f8; padding: 60px 20px; text-align: center; margin-top: 100px;
         }
@@ -104,7 +111,11 @@
 <body>
 
 <div class="loader" id="loader">
-    <h2 class="animate__animated animate__heartBeat animate__infinite" style="color: #e84393;">ئیلیان...</h2>
+    <h2 style="color: #e84393;">ئیلیان...</h2>
+</div>
+
+<div class="order-notice">
+    🌸 مەرجی داواکردن: پێویستە ٥٠٪ی پارەکە بە (FIB / FastPay) پێشوەختە بنێردرێت.
 </div>
 
 <a href="https://wa.me/9647519568548" class="float-wa">💬</a>
@@ -122,7 +133,7 @@
 <div class="grid" id="flower-grid"></div>
 
 <div class="payment-box">
-    <h2>شێوازەکانی پارەدان</h2>
+    <h2>💳 شێوازەکانی پارەدان</h2>
     <p>بۆ دڵنیایی لە جێگیرکردنی داواکاری، نیوەی بڕەکە پێشوەختە وەردەگیرێت</p>
     <div class="methods">
         <div class="method-item" style="color: #6a1b9a;">FIB</div>
@@ -135,19 +146,18 @@
 </footer>
 
 <script>
-    // لۆدینگەکە لادەبات دوای تەواوبوونی سایتەکە
     window.onload = () => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500); };
 
     const flowers = [
+        { name: "باکسی ڕەشی شاهانە", price: "٦٠,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1533616688419-b7a585564566?w=800" },
         { name: "ئیلیان سیگنێچەر", price: "٤٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800" },
-        { name: "باکسی ڕێد ڕۆز", price: "٣٠,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1548610762-65ca0615f399?w=800" },
         { name: "چەپکە گوڵی میترا", price: "٢٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800" },
         { name: "گوڵی مۆری لوکس", price: "٥٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=800" }
     ];
 
     const grid = document.getElementById('flower-grid');
     flowers.forEach(f => {
-        const msg = encodeURIComponent(`سڵاو ئیلیان فڵاوەرز، حەز دەکەم ئەمە داوا بکەم: ${f.name}`);
+        const msg = encodeURIComponent(`سڵاو ئیلیان فڵاوەرز، حەز دەکەم ئەمە داوا بکەم: ${f.name}\nئاگادارم کە دەبێت ٥٠٪ی پارەکە پێشوەختە بنێرم.`);
         grid.innerHTML += `
             <div class="card">
                 <img src="${f.img}" alt="${f.name}">
