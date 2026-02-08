@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* مەرجەکە - کاتێک سکرۆڵ دەکرێت نامێنێت */
+        /* مەرجەکە - کاتێک ئەچیەتە خوارەوە دیار نامێنێت */
         .order-notice {
             background: linear-gradient(90deg, #e84393, #6a1b9a);
             color: white;
@@ -33,7 +33,6 @@
             font-weight: 800;
             font-size: 15px;
             width: 100%;
-            z-index: 1001;
         }
 
         /* Loading Animation */
@@ -112,18 +111,18 @@
 <body>
 
 <div class="loader" id="loader">
-    <h2 class="animate__animated animate__heartBeat animate__infinite" style="color: #e84393;">ئیلیان...</h2>
+    <h2 style="color: #e84393;">ئیلیان...</h2>
 </div>
 
 <div class="order-notice">
-    🌸 ئاگاداری: بۆ جێگیرکردنی داواکاری، پێویستە ٥٠٪ی بڕی پارەکە بە (FIB یان FastPay) پێشوەختە بنێردرێت.
+    🌸 مەرجی داواکردن: پێویستە ٥٠٪ی پارەکە بە (FIB / FastPay) پێشوەختە بنێردرێت.
 </div>
 
 <a href="https://wa.me/9647519568548" class="float-wa">💬</a>
 
 <div class="hero">
-    <h1>ئیلیان</h1>
-    <p>جوانی و لوکسی لە هەر چەپکە گوڵێکدا</p>
+    <h1 class="animate__animated animate__fadeInDown">گوڵفرۆشی ئیلیان</h1>
+    <p class="animate__animated animate__fadeInUp">دیارییەک بۆ ئەوانەی شایەنی باشترینن</p>
     <a href="#products" style="color: white; margin-top: 30px; text-decoration: none; border-bottom: 2px solid white;">ببینە</a>
 </div>
 
@@ -147,10 +146,7 @@
 </footer>
 
 <script>
-    window.onload = () => { 
-        document.getElementById('loader').style.opacity = '0'; 
-        setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500); 
-    };
+    window.onload = () => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500); };
 
     const flowers = [
         { name: "ئیلیان سیگنێچەر", price: "٤٥,٠٠٠ د.ع", img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800" },
@@ -161,7 +157,7 @@
 
     const grid = document.getElementById('flower-grid');
     flowers.forEach(f => {
-        const msg = encodeURIComponent(`سڵاو ئیلیان فڵاوەرز، دەمەوێت ئەمە داوا بکەم: ${f.name}\nئاگادارم کە پێویستە ٥٠٪ی پارەکە بە پێشوەختە بنێرم.`);
+        const msg = encodeURIComponent(`سڵاو ئیلیان فڵاوەرز، حەز دەکەم ئەمە داوا بکەم: ${f.name}\nئاگادارم کە دەبێت ٥٠٪ی پارەکە پێشوەختە بنێرم.`);
         grid.innerHTML += `
             <div class="card">
                 <img src="${f.img}" alt="${f.name}">
