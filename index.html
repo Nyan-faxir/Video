@@ -2,82 +2,85 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ئاسایشی خەلیفان | بەشی سکاڵا</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>دروستکەری پاسپۆرت 🔱</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans Arabic', sans-serif; }
-        .hero-gradient { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; text-align: center; padding: 20px; }
+        .box { background: #2c2c2c; padding: 20px; border-radius: 15px; display: inline-block; width: 90%; max-width: 400px; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        button { background: #ff4500; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 95%; font-weight: bold; }
+        canvas { margin-top: 20px; border: 2px solid #555; max-width: 100%; border-radius: 10px; display: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <header class="hero-gradient text-white py-12 px-4 text-center shadow-lg">
-        <div class="max-w-4xl mx-auto">
-            <i class="fas fa-shield-halved text-6xl mb-4 text-blue-400"></i>
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">بەڕێوبەرایەتی ئاسایشی خەلیفان</h1>
-            <p class="text-blue-200 text-lg">بەشی بەرەنگاربوونەوەی تاوانە ئەلیکترۆنییەکان</p>
-        </div>
-    </header>
+    <div class="box">
+        <h2>Passport System 2026</h2>
+        <input type="text" id="fullName" placeholder="ناوی تەواو (نموونە: FATEMA MAHMOOD)">
+        <input type="text" id="pNum" placeholder="ژمارەی پاسپۆرت (نموونە: B1234567)">
+        <input type="text" id="dob" placeholder="مەوالید (YYMMDD - نموونە: 980512)">
+        <input type="text" id="expiry" placeholder="بەسەرچوون (نموونە: 330112)">
+        <select id="gender" style="width: 95%; padding: 10px; margin: 10px 0;">
+            <option value="F">Female (مێ)</option>
+            <option value="M">Male (نێر)</option>
+        </select>
+        <label>وێنەی کەسەکە هەڵبژێرە:</label>
+        <input type="file" id="photoUpload" accept="image/*">
+        <button onclick="processPassport()">دروستکردن و دابەزاندن</button>
+    </div>
 
-    <main class="max-w-4xl mx-auto px-4 py-10">
-        
-        <section class="bg-white rounded-2xl shadow-xl overflow-hidden mb-12 border-2 border-blue-50">
-            <div class="p-8">
-                <h2 class="text-3xl font-bold mb-6 border-r-8 border-blue-600 pr-4 text-blue-900">تۆمارکردنی سکاڵا</h2>
-                <div class="space-y-6">
-                    <p class="text-lg leading-relaxed text-gray-700">
-                        هاوڵاتی بەڕێز، ئەگەر ڕووبەڕووی هەر جۆرە <strong class="text-red-600">هەڕەشەیەک، هاککردنێک، یان بڵاوکردنەوەی وێنەی تایبەت</strong> بوویتەتەوە، تکایە سەردانمان بکە یان پەیوەندیمان پێوە بکە. ڕێگە مەدە ترس ڕێگر بێت لە وەرگرتنەوەی مافەکانت.
-                    </p>
-                    
-                    <div class="bg-amber-50 p-5 rounded-xl border-r-4 border-amber-500 shadow-sm">
-                        <h4 class="font-bold mb-2 text-amber-900 text-xl italic">بەڵگەکان بپارێزە!</h4>
-                        <p class="text-amber-800">تکایە سکرینشۆتی نامەکان یان لینکەکان بپارێزە و بە هیچ شێوەیەک وەڵامی هەڕەشەکار مەدەرەوە.</p>
-                    </div>
+    <canvas id="passportCanvas" width="1000" height="1400"></canvas>
 
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a href="tel:07519568548" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center py-5 rounded-2xl font-bold text-xl transition-all shadow-lg active:scale-95">
-                            <i class="fas fa-phone-alt ml-2"></i> پەیوەندی بکە
-                        </a>
-                        <a href="https://wa.me/9647519568548" target="_blank" class="flex-1 bg-green-600 hover:bg-green-700 text-white text-center py-5 rounded-2xl font-bold text-xl transition-all shadow-lg active:scale-95">
-                            <i class="fab fa-whatsapp ml-2 text-2xl"></i> واتسئاپ
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-blue-900 p-4 text-center text-sm text-blue-100 font-medium">
-                ناونیشان: خەلیفان - شەقامی گشتی - تەلاری ئاسایش
-            </div>
-        </section>
+    <script>
+        function processPassport() {
+            const canvas = document.getElementById('passportCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            const name = document.getElementById('fullName').value.toUpperCase();
+            const pNum = document.getElementById('pNum').value.toUpperCase();
+            const dob = document.getElementById('dob').value;
+            const expiry = document.getElementById('expiry').value;
+            const gender = document.getElementById('gender').value;
+            const photoFile = document.getElementById('photoUpload').files[0];
 
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-600 text-center transition-transform hover:-translate-y-1">
-                <i class="fas fa-user-secret text-3xl text-blue-600 mb-3"></i>
-                <h3 class="font-bold mb-2">نهێنیپارێزی</h3>
-                <p class="text-sm text-gray-600">زانیارییەکانت بە تەواوی پارێزراو دەبن لای ئێمە.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-600 text-center transition-transform hover:-translate-y-1">
-                <i class="fas fa-bolt text-3xl text-red-600 mb-3"></i>
-                <h3 class="font-bold mb-2">خێرایی</h3>
-                <p class="text-sm text-gray-600">بە زووترین کات بەدواداچوون بۆ کێشەکەت دەکرێت.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-green-600 text-center transition-transform hover:-translate-y-1">
-                <i class="fas fa-gavel text-3xl text-green-600 mb-3"></i>
-                <h3 class="font-bold mb-2">یاسایی</h3>
-                <p class="text-sm text-gray-600">هەموو ڕێکارەکان بەپێی یاسای سزادانی عێراقی دەبێت.</p>
-            </div>
-        </div>
+            if (!photoFile || !name) { alert("تکایە هەموو زانیارییەکان پڕ بکەرەوە!"); return; }
 
-    </main>
+            const template = new Image();
+            template.src = 'blank_template.png'; // دەبێت ئەم وێنەیە لە تەنیشت index.html بێت
 
-    <footer class="text-center py-12 text-gray-400 text-xs">
-        <div class="mb-2">
-            <i class="fas fa-lock ml-1"></i> سەکۆی پاراستنی دیجیتاڵی خەلیفان
-        </div>
-        &copy; ۲۰۲٦ هەموو مافەکان پارێزراوە بۆ ئاسایشی خەلیفان
-    </footer>
+            template.onload = function() {
+                canvas.style.display = "block";
+                ctx.drawImage(template, 0, 0, 1000, 1400);
 
+                // 1. نووسینی ناو و زانیارییەکان
+                ctx.font = "bold 28px Arial";
+                ctx.fillStyle = "#1a1a1a";
+                ctx.fillText(name, 320, 425);
+
+                // 2. دروستکردنی MRZ (بە هەمان لۆژیکی کۆدە پایتۆنەکەت)
+                ctx.font = "32px monospace";
+                ctx.fillStyle = "black";
+                let parts = name.split(" ");
+                let lastName = parts[parts.length - 1];
+                let firstNames = parts.slice(0, -1).join("<");
+                let line1 = ("P<IRQ" + lastName + "<<" + firstNames).padEnd(44, "<");
+                let line2 = (pNum + "<IRQ" + dob + gender + expiry).padEnd(44, "<");
+
+                ctx.fillText(line1, 40, 1225);
+                ctx.fillText(line2, 40, 1280);
+
+                // 3. دانانی وێنەی کەسەکە
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const userImg = new Image();
+                    userImg.onload = function() {
+                        ctx.globalAlpha = 0.9; // هەمان Opacity کۆدەکەی پایتۆن
+                        ctx.drawImage(userImg, 35, 435, 245, 315);
+                    }
+                    userImg.src = e.target.result;
+                }
+                reader.readAsDataURL(photoFile);
+            };
+        }
+    </script>
 </body>
 </html>
