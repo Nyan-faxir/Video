@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sonar Scanner 🔱</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0"></script>
+    <title>Military Night Vision Sonar</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix"></script>
     <style>
-        body { margin: 0; background: black; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
-        #container { position: relative; width: 100vw; height: 100vh; }
-        video { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+        body { margin: 0; background: black; overflow: hidden; }
+        /* فلتەری سەوز بۆ شاشەکە */
+        #container { 
+            position: relative; width: 100vw; height: 100vh;
+            filter: sepia(100%) hue-rotate(90deg) brightness(1.2) contrast(1.5);
+        }
+        video { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
         canvas { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 5; }
-        #ui { position: absolute; top: 20px; width: 100%; text-align: center; color: #00ffff; z-index: 10; font-weight: bold; letter-spacing: 2px; }
-        /* هێڵی جوڵاوی سۆنەر */
-        .scan-line { position: absolute; width: 100%; height: 2px; background: cyan; box-shadow: 0 0 15px cyan; z-index: 8; animation: move 3s linear infinite; }
-        @keyframes move { from { top: 0; } to { top: 100%; } }
+        #ui { position: absolute; top: 20px; width: 100%; text-align: center; color: #00ff00; z-index: 10; font-family: monospace; font-size: 18px; text-shadow: 0 0 5px #00ff00; }
+        .grid { position: absolute; width: 100%; height: 100%; background-image: radial-gradient(circle, #00ff00 1px, transparent 1px); background-size: 30px 30px; opacity: 0.1; z-index: 2; }
     </style>
 </head>
 <body>
 
-<div id="ui">SYSTEM: <span id="msg">INITIALIZING AI...</span></div>
+<div id="ui">[ NVG ACTIVE ] - SENSITIVITY: HIGH</div>
 <div id="container">
-    <div class="scan-line"></div>
+    <div class="grid"></div>
     <video id="video" autoplay playsinline muted></video>
     <canvas id="canvas"></canvas>
 </div>
@@ -30,47 +32,36 @@
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const msg = document.getElementById('msg');
 
     async function startApp() {
-        try {
-            // ١. کردنەوەی کامێرا
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: 'environment' }, audio: false 
-            });
-            video.srcObject = stream;
-            
-            // ٢. بارکردنی مۆدێل بە وەشانی MobileNet (زۆر خێرایە)
-            msg.innerText = "LOADING MODEL (PLEASE WAIT)...";
-            const net = await bodyPix.load({
-                architecture: 'MobileNetV1',
-                outputStride: 16,
-                multiplier: 0.50,
-                quantBytes: 2
-            });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = stream;
 
-            msg.innerText = "SCANNING FOR HUMAN SIGNATURES";
+        const net = await bodyPix.load({
+            architecture: 'MobileNetV1',
+            outputStride: 16,
+            multiplier: 0.50,
+            quantBytes: 2
+        });
+
+        function detect() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
             
-            function detect() {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                
-                net.segmentPerson(video, { internalResolution: 'low', segmentationThreshold: 0.7 })
-                .then(segmentation => {
-                    // ڕەنگی شینی سۆنەر (Neon Blue)
-                    const mask = bodyPix.toMask(segmentation, {r:0, g:255, b:255, a:180}, {r:0, g:0, b:0, a:0});
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    bodyPix.drawMask(canvas, video, mask, 0.8, 0, false);
-                    requestAnimationFrame(detect);
-                });
-            }
-            detect();
-        } catch (err) {
-            msg.innerText = "ERROR: ACCESS DENIED";
-            console.error(err);
+            // لێرەدا Threshold کراوە بە 0.35 بۆ ئەوەی زۆر بە ئاسانی مرۆڤ بناسێتەوە
+            net.segmentPerson(video, { 
+                internalResolution: 'medium', 
+                segmentationThreshold: 0.35 
+            })
+            .then(segmentation => {
+                const mask = bodyPix.toMask(segmentation, {r:0, g:255, b:255, a:200}, {r:0, g:0, b:0, a:0});
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                bodyPix.drawMask(canvas, video, mask, 1, 0, false);
+                requestAnimationFrame(detect);
+            });
         }
+        detect();
     }
-
     startApp();
 </script>
 </body>
