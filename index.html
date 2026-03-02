@@ -1,86 +1,51 @@
-<!DOCTYPE html>
-<html lang="ku" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>دروستکەری پاسپۆرت 🔱</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; text-align: center; padding: 20px; }
-        .box { background: #2c2c2c; padding: 20px; border-radius: 15px; display: inline-block; width: 90%; max-width: 400px; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
-        button { background: #ff4500; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 95%; font-weight: bold; }
-        canvas { margin-top: 20px; border: 2px solid #555; max-width: 100%; border-radius: 10px; display: none; }
-    </style>
-</head>
-<body>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-    <div class="box">
-        <h2>Passport System 2026</h2>
-        <input type="text" id="fullName" placeholder="ناوی تەواو (نموونە: FATEMA MAHMOOD)">
-        <input type="text" id="pNum" placeholder="ژمارەی پاسپۆرت (نموونە: B1234567)">
-        <input type="text" id="dob" placeholder="مەوالید (YYMMDD - نموونە: 980512)">
-        <input type="text" id="expiry" placeholder="بەسەرچوون (نموونە: 330112)">
-        <select id="gender" style="width: 95%; padding: 10px; margin: 10px 0;">
-            <option value="F">Female (مێ)</option>
-            <option value="M">Male (نێر)</option>
-        </select>
-        <label>وێنەی کەسەکە هەڵبژێرە:</label>
-        <input type="file" id="photoUpload" accept="image/*">
-        <button onclick="processPassport()">دروستکردن و دابەزاندن</button>
-    </div>
-
-    <canvas id="passportCanvas" width="1000" height="1400"></canvas>
-
-    <script>
-        function processPassport() {
-            const canvas = document.getElementById('passportCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            const name = document.getElementById('fullName').value.toUpperCase();
-            const pNum = document.getElementById('pNum').value.toUpperCase();
-            const dob = document.getElementById('dob').value;
-            const expiry = document.getElementById('expiry').value;
-            const gender = document.getElementById('gender').value;
-            const photoFile = document.getElementById('photoUpload').files[0];
-
-            if (!photoFile || !name) { alert("تکایە هەموو زانیارییەکان پڕ بکەرەوە!"); return; }
-
-            const template = new Image();
-            template.src = 'blank_template.png'; // دەبێت ئەم وێنەیە لە تەنیشت index.html بێت
-
-            template.onload = function() {
-                canvas.style.display = "block";
-                ctx.drawImage(template, 0, 0, 1000, 1400);
-
-                // 1. نووسینی ناو و زانیارییەکان
-                ctx.font = "bold 28px Arial";
-                ctx.fillStyle = "#1a1a1a";
-                ctx.fillText(name, 320, 425);
-
-                // 2. دروستکردنی MRZ (بە هەمان لۆژیکی کۆدە پایتۆنەکەت)
-                ctx.font = "32px monospace";
-                ctx.fillStyle = "black";
-                let parts = name.split(" ");
-                let lastName = parts[parts.length - 1];
-                let firstNames = parts.slice(0, -1).join("<");
-                let line1 = ("P<IRQ" + lastName + "<<" + firstNames).padEnd(44, "<");
-                let line2 = (pNum + "<IRQ" + dob + gender + expiry).padEnd(44, "<");
-
-                ctx.fillText(line1, 40, 1225);
-                ctx.fillText(line2, 40, 1280);
-
-                // 3. دانانی وێنەی کەسەکە
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const userImg = new Image();
-                    userImg.onload = function() {
-                        ctx.globalAlpha = 0.9; // هەمان Opacity کۆدەکەی پایتۆن
-                        ctx.drawImage(userImg, 35, 435, 245, 315);
-                    }
-                    userImg.src = e.target.result;
-                }
-                reader.readAsDataURL(photoFile);
-            };
+    async function setupCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: 'environment' }, 
+                audio: false 
+            });
+            video.srcObject = stream;
+            return new Promise((resolve) => {
+                video.onloadedmetadata = () => {
+                    video.play();
+                    resolve(video);
+                };
+            });
+        } catch (e) {
+            alert("هەڵە لە کامێرا: " + e.message);
         }
-    </script>
-</body>
-</html>
+    }
+
+    async function startDetection() {
+        // نیشاندانی نامەیەک تا مۆدێلەکە بار دەبێت
+        console.log("Loading AI Model...");
+        const net = await bodyPix.load({
+            architecture: 'MobileNetV1',
+            outputStride: 16,
+            multiplier: 0.50,
+            quantBytes: 2
+        });
+        
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        async function detect() {
+            const segmentation = await net.segmentPerson(video);
+            
+            const maskColor = { r: 0, g: 255, b: 255, a: 150 };
+            const background = { r: 0, g: 0, b: 0, a: 0 };
+            const coloredPartImage = bodyPix.toMask(segmentation, maskColor, background);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bodyPix.drawMask(canvas, video, coloredPartImage, 0.7, 0, false);
+
+            requestAnimationFrame(detect);
+        }
+        detect();
+    }
+
+    setupCamera().then(startDetection);
