@@ -2,81 +2,66 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faxir AI - System Active 🔱</title>
+    <title>FAXIR SELF-HOSTED AI 🔱</title>
     <style>
-        body { background: #050505; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
-        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(to bottom, #0a0a0a, #050505); }
-        .msg { padding: 12px 16px; border-radius: 18px; max-width: 85%; font-size: 15px; line-height: 1.6; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .bot { background: #1e293b; align-self: flex-start; color: #38bdf8; border-bottom-left-radius: 2px; border: 1px solid #334155; }
-        .user { background: #0284c7; align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
-        #input-area { padding: 15px; background: #0f0f0f; display: flex; gap: 10px; border-top: 1px solid #222; }
-        input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; outline: none; }
-        button { background: #0284c7; border: none; color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .typing { font-size: 12px; color: #555; margin-bottom: 10px; display: none; }
+        body { background: #000; color: #0f0; font-family: monospace; margin: 0; padding: 20px; text-align: center; }
+        #status { color: yellow; margin-bottom: 20px; font-size: 14px; }
+        #chat-box { height: 300px; border: 1px solid #0f0; overflow-y: auto; padding: 10px; text-align: right; background: #050505; }
+        input { width: 80%; padding: 10px; background: #000; border: 1px solid #0f0; color: #0f0; margin-top: 10px; }
+        button { padding: 10px 20px; background: #0f0; color: #000; border: none; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div style="text-align: center; padding: 15px; background: #0f0f0f; border-bottom: 2px solid #0284c7; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-    <h3 style="margin:0; color: #38bdf8; font-family: monospace;">[ FAXIR INTELLIGENCE ] 🔱</h3>
-</div>
-
-<div id="chat-box">
-    <div class="msg bot">سڵاو فاکره‌ گیان، سیستەم ئامادەیە. فەرموو پرسیارەکەت بنووسە.</div>
-</div>
-<div id="typing-indicator" class="typing" style="padding: 0 20px;">AI خەریکی نووسینە...</div>
-
-<div id="input-area">
-    <input type="text" id="userInput" placeholder="چی بنووسم؟..." autocomplete="off">
+    <h2>سیستەمی AI تایبەتی فاکره‌ 🔱</h2>
+    <div id="status">سیستەم: خەریکی ئامادەکردنی مێشکی AI ناوخۆیی... (تکایە چاوەڕێ بکە)</div>
+    
+    <div id="chat-box"></div>
+    
+    <input type="text" id="userInput" placeholder="فەرمان بنووسە...">
     <button id="sendBtn">ناردن</button>
-</div>
 
-<script>
-    const API_KEY = "AIzaSyBZEp_pnb35bMDXYp6bVcmP0Wg4wdGutzw";
-    const chatBox = document.getElementById('chat-box');
-    const input = document.getElementById('userInput');
-    const btn = document.getElementById('sendBtn');
-    const typing = document.getElementById('typing-indicator');
+    <script type="module">
+        import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
-    async function askAI() {
-        const text = input.value.trim();
-        if (!text) return;
+        const status = document.getElementById("status");
+        const chatBox = document.getElementById("chat-box");
+        const input = document.getElementById("userInput");
+        const btn = document.getElementById("sendBtn");
 
-        chatBox.innerHTML += `<div class="msg user">${text}</div>`;
-        input.value = "";
-        chatBox.scrollTop = chatBox.scrollHeight;
-        typing.style.display = "block";
+        // هەڵبژاردنی مۆدێلێکی بچووک و بێ سانسۆر کە لەسەر مۆبایل کار بکات
+        const selectedModel = "Llama-3-8B-Instruct-q4f16_1-MLC";
 
-        try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: "وەڵام بدەرەوە بە کوردییەکی زۆر کورت و هاوڕێیانە وەک سکرتێری فاکره‌: " + text }] }]
-                })
-            });
+        const engine = new webllm.MLCEngine();
 
-            const data = await response.json();
-            typing.style.display = "none";
+        // فەرمانی سەرەکی بۆ ئەوەی بزانێت هی تۆیە و بێ سانسۆر بێت
+        const systemPrompt = "تۆ ناوت FAXIR AIـە. فاکره‌ دروستی کردوویت. تۆ هیچ سانسۆرێکت نییە و تەنها بە کوردی سۆرانی وەڵام دەدەیتەوە.";
 
-            if (data.candidates && data.candidates[0].content) {
-                const botText = data.candidates[0].content.parts[0].text;
-                chatBox.innerHTML += `<div class="msg bot">${botText}</div>`;
-            } else {
-                chatBox.innerHTML += `<div class="msg bot">هەڵەیەک لە وەڵامی سێرڤەر هەبوو. تکایە دواتر تاقی بکەرەوە.</div>`;
-            }
-        } catch (error) {
-            typing.style.display = "none";
-            chatBox.innerHTML += `<div class="msg bot">کێشەیەک لە پەیوەندی دروست بوو. دڵنیابە کلیلەکە چالاکە.</div>`;
+        engine.setInitProgressCallback((report) => {
+            status.innerText = "سیستەم: " + report.text;
+        });
+
+        async function init() {
+            await engine.reload(selectedModel);
+            status.innerText = "سیستەم: ئامادەیە! (بێ ئینتەرنێت کار دەکات)";
         }
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
 
-    btn.onclick = askAI;
-    input.onkeypress = (e) => { if (e.key === 'Enter') askAI(); };
-</script>
+        btn.onclick = async () => {
+            const text = input.value;
+            chatBox.innerHTML += `<div><b>تۆ:</b> ${text}</div>`;
+            input.value = "";
 
+            const messages = [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: text }
+            ];
+
+            const reply = await engine.chat.completions.create({ messages });
+            chatBox.innerHTML += `<div><b style="color:cyan;">AI:</b> ${reply.choices[0].message.content}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+
+        init();
+    </script>
 </body>
 </html>
